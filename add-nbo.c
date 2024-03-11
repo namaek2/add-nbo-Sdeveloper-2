@@ -6,7 +6,7 @@
 
 void add_nbo(char* argv[]) {
     if(argv[1] == NULL || argv[2] == NULL) {
-        printf("인수가 전달되지 않음");
+        printf("인수가 전달되지 않음\n");
         return;
     }
 
@@ -20,13 +20,18 @@ void add_nbo(char* argv[]) {
 
 
     uint32_t result, f1, f2;
-    uint32_t t1, t2, t3, t4;
-    size_t f1_size, f2_size;
-    f1_size = fread(&f1, sizeof(uint32_t), 1, file1);
-    f2_size = fread(&f2, sizeof(uint32_t), 1, file2);
+    uint32_t t1, t2, t3, t4, f1_size, f2_size;
+    
+    fread(&f1, sizeof(uint32_t), 1, file1);
+    fread(&f2, sizeof(uint32_t), 1, file2);
+   
+    fseek(file1,0,SEEK_END);
+    f1_size = ftell(file1);
+    fseek(file2, 0, SEEK_END);
+    f2_size = ftell(file2);
 
-    if(f1_size < sizeof(char) || f2_size < sizeof(char)) {
-        printf("파일의 크기가 32비트(4바이트) 보다 작음");
+    if(f1_size < sizeof(int) ||f2_size < sizeof(int)) {
+        printf("파일의 크기가 32비트(4바이트) 보다 작음\n");
         return;
     }
 
