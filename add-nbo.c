@@ -5,20 +5,31 @@
 #include "stdint.h"
 
 void add_nbo(char* argv[]) {
+    if(argv[1] == NULL || argv[2] == NULL) {
+        printf("인수가 전달되지 않음");
+        return;
+    }
+
     FILE* file1= fopen(argv[1], "r");
     FILE* file2= fopen(argv[2], "r");
 
     if (file1 == NULL || file2 == NULL) {
-        printf("파일 열기 실패\n");
+        printf("파일이 존재하지 않거나 열기에 실패함\n");
         return;
     }
 
+
     uint32_t result, f1, f2;
     uint32_t t1, t2, t3, t4;
+    size_t f1_size, f2_size;
+    f1_size = fread(&f1, sizeof(uint32_t), 1, file1);
+    f2_size = fread(&f2, sizeof(uint32_t), 1, file2);
 
-    fread(&f1, sizeof(uint32_t), 1, file1);
-    fread(&f2, sizeof(uint32_t), 1, file2);
-    
+    if(f1_size < sizeof(char) || f2_size < sizeof(char)) {
+        printf("파일의 크기가 32비트(4바이트) 보다 작음");
+        return;
+    }
+
     t1 = (f1 & 0xFF000000) >> 24;
     t2 = (f1 & 0x00FF0000) >> 8;
     t3 = (f1 & 0x0000FF00) << 8;
