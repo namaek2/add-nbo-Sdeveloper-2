@@ -18,8 +18,7 @@ void add_nbo(char* argv[]) {
 
     fread(&f1, sizeof(uint32_t), 1, file1);
     fread(&f2, sizeof(uint32_t), 1, file2);
-
-    return;
+    
     t1 = (f1 & 0xFF000000) >> 24;
     t2 = (f1 & 0x00FF0000) >> 8;
     t3 = (f1 & 0x0000FF00) << 8;
